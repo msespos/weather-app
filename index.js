@@ -41,8 +41,6 @@ async function fetchWeather() {
   return selectedWeatherData;
 };
 
-// START HERE AND CLEAN UP THE PRESENTATION OF THE PROPERTIES (FAHRENHEIT NOT KELVIN E.G.)
-
 const renderWeather = (selectedWeatherData) => {
   const p = document.getElementById("p");
   const latitude = document.createTextNode("Latitude: " + selectedWeatherData.latitude);
