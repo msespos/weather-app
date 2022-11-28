@@ -21,11 +21,10 @@ async function fetchWeather() {
   const selectedWeatherData = {
     latitude: allData.coord.lat,
     longitude: allData.coord.lon,
-    description: allData.weather[0].description,
+    summary: allData.weather[0].main,
+    details: allData.weather[0].description,
     temperature: allData.main.temp,
-    feelsLike: allData.main.feels_like,
-    minTemperature: allData.main.temp_min,
-    maxTemperature: allData.main.temp_max
+    feelsLike: allData.main.feels_like
   }
   return selectedWeatherData;
 }
@@ -34,12 +33,11 @@ const renderWeather = (selectedWeatherData) => {
   const p = document.getElementById("p");
   const latitude = document.createTextNode("Latitude: " + selectedWeatherData.latitude);
   const longitude = document.createTextNode("Longitude: " + selectedWeatherData.longitude);
-  const description = document.createTextNode("Weather: " + selectedWeatherData.description);
+  const summary = document.createTextNode("Summary: " + selectedWeatherData.summary);
+  const details = document.createTextNode("Details: " + selectedWeatherData.details);
   const temperature = document.createTextNode("Temperature now: " + selectedWeatherData.temperature);
   const feelsLike = document.createTextNode("Feels Like: " + selectedWeatherData.feelsLike);
-  const minTemperature = document.createTextNode("Today's minimum temperature: " + selectedWeatherData.minTemperature);
-  const maxTemperature = document.createTextNode("Today's maximum temperature: " + selectedWeatherData.maxTemperature);
-  const properties = [latitude, longitude, description, temperature, feelsLike, minTemperature, maxTemperature];
+  const properties = [latitude, longitude, summary, details, temperature, feelsLike];
   clearRenderSpace(p);
   properties.forEach((property) => {
     p.appendChild(property);
