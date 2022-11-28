@@ -16,39 +16,35 @@ async function fetchWeather() {
       minTemperature: allData.main.temp_min,
       maxTemperature: allData.main.temp_max
     }
-    const p = document.getElementById("p");
-    const latitude = document.createTextNode("Latitude: " + selectedWeatherData.latitude);
-    const longitude = document.createTextNode("Longitude: " + selectedWeatherData.longitude);
-    const description = document.createTextNode("Weather: " + selectedWeatherData.description);
-    const temperature = document.createTextNode("Temperature now: " + selectedWeatherData.temperature);
-    const feelsLike = document.createTextNode("Feels Like: " + selectedWeatherData.feelsLike);
-    const minTemperature = document.createTextNode("Today's minimum temperature: " + selectedWeatherData.minTemperature);
-    const maxTemperature = document.createTextNode("Today's maximum temperature: " + selectedWeatherData.maxTemperature);
-    p.appendChild(latitude);
-    linebreak = document.createElement("br");
-    p.appendChild(linebreak);
-    p.appendChild(longitude);
-    linebreak = document.createElement("br");
-    p.appendChild(linebreak);
-    p.appendChild(description);
-    linebreak = document.createElement("br");
-    p.appendChild(linebreak);
-    p.appendChild(temperature);
-    linebreak = document.createElement("br");
-    p.appendChild(linebreak);
-    p.appendChild(feelsLike);
-    linebreak = document.createElement("br");
-    p.appendChild(linebreak);
-    p.appendChild(minTemperature);
-    linebreak = document.createElement("br");
-    p.appendChild(linebreak);
-    p.appendChild(maxTemperature);
-    console.log("allData:", allData);
-    console.log("selectedWeatherData", selectedWeatherData);
+    renderWeather(selectedWeatherData);
   } catch(error) {
-    console.log("Error; try again please.")
+    const p = document.getElementById("p");
+    const errorMessage = document.createTextNode("Error; try again please.");
+    while (p.firstChild) {
+      p.removeChild(p.firstChild);
+    }
+    p.appendChild(errorMessage);
   }
 }
 const btn = document.getElementById("btn");
 btn.addEventListener("click", fetchWeather);
 
+const renderWeather = (selectedWeatherData) => {
+  const p = document.getElementById("p");
+  const latitude = document.createTextNode("Latitude: " + selectedWeatherData.latitude);
+  const longitude = document.createTextNode("Longitude: " + selectedWeatherData.longitude);
+  const description = document.createTextNode("Weather: " + selectedWeatherData.description);
+  const temperature = document.createTextNode("Temperature now: " + selectedWeatherData.temperature);
+  const feelsLike = document.createTextNode("Feels Like: " + selectedWeatherData.feelsLike);
+  const minTemperature = document.createTextNode("Today's minimum temperature: " + selectedWeatherData.minTemperature);
+  const maxTemperature = document.createTextNode("Today's maximum temperature: " + selectedWeatherData.maxTemperature);
+  const properties = [latitude, longitude, description, temperature, feelsLike, minTemperature, maxTemperature];
+  while (p.firstChild) {
+    p.removeChild(p.firstChild);
+  }
+  properties.forEach((property) => {
+    p.appendChild(property);
+    linebreak = document.createElement("br");
+    p.appendChild(linebreak);
+  });
+}
