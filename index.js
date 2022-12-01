@@ -3,6 +3,12 @@ async function fetchAndRenderCityData() {
     const city = document.getElementById("city").value;
     const cityData = await fetchCityData(city);
     renderCityData(city, cityData);
+    if (cityData.length === 0) {
+      const p = document.getElementById("p");
+      const noCityFoundMessage = document.createTextNode("No city found; try again please.");
+      clear(p);
+      p.appendChild(noCityFoundMessage);
+    }
   } catch(error) {
     const p = document.getElementById("p");
     const errorMessage = document.createTextNode("Error; try again please.");
@@ -25,6 +31,8 @@ async function fetchCityData(city) {
 
 const renderCityData = (city, cityData) => {
   console.log(cityData);
+  const p = document.getElementById("p");
+  clear(p);
   const searchResults = document.getElementById("search-results");
   clear(searchResults);
   cityData.forEach((array) => {
