@@ -13,10 +13,6 @@
   <form>
     <label for="city">City:</label>
     <input type="text" id="city" name="city" required><br>
-    <label for="state">State (US):</label>
-    <input type="text" id="state" name="state"><br>
-    <label for="country">Country Code:</label>
-    <input type="text" id="country" name="country"><br>
     <div>
       <input type="radio" id="f" name="temperature-format" value="f" checked>
       <label for="f">Fahrenheit</label>
@@ -24,7 +20,8 @@
       <label for="c">Celsius</label>
     </div>
   </form>
-  <button id="btn">Get the Weather!</button>
+  <button id="btn">Search for your city!</button>
   <p id="p"></p>
+  <div id="search-results"></div>
 </body>
 </html>

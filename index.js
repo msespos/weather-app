@@ -1,73 +1,50 @@
-async function fetchAndRenderWeather() {
+async function fetchAndRenderCityData() {
   try {
-    const selectedWeatherData = await fetchWeather();
-    renderWeather(selectedWeatherData);
+    const city = document.getElementById("city").value;
+    const cityData = await fetchCityData(city);
+    renderCityData(city, cityData);
   } catch(error) {
     const p = document.getElementById("p");
     const errorMessage = document.createTextNode("Error; try again please.");
-    clearRenderSpace(p);
+    clear(p);
     p.appendChild(errorMessage);
   }
 };
 const btn = document.getElementById("btn");
-btn.addEventListener("click", fetchAndRenderWeather);
+btn.addEventListener("click", fetchAndRenderCityData);
 
-async function fetchWeather() {
-  const city = document.getElementById("city").value;
-  const state = document.getElementById("state").value;
-  const country = document.getElementById("country").value;
-  let selectedTemperatureFormat = "f";
-  let selectedTemperatureFormatString = "&units=imperial";
-  const temperatureFormats = document.getElementsByName('temperature-format');
-  temperatureFormats.forEach((temperatureFormat) => {
-    if (temperatureFormat.checked) {
-      selectedTemperatureFormat = temperatureFormat.value;
-    }
+async function fetchCityData(city) {
+  const response = await fetch("http://dataservice.accuweather.com/locations/v1/cities/search?apikey=SlhOykseiy5qmrZym7dGGVNRtiGU4Vh0&q=" + city, {mode: 'cors'})
+  const allCityData = await response.json();
+  let allKeysAreasCountries = [];
+  allCityData.forEach((object) => {
+    allKeysAreasCountries.push([object.Key, object.AdministrativeArea.EnglishName, object.Country.EnglishName]);
   });
-  if (selectedTemperatureFormat === "c") {
-    selectedTemperatureFormatString = "&units=metric";
-  }
-  const response = await fetch("https://api.openweathermap.org/data/2.5/weather?q=" + city + "," + state + "," + country + "&APPID=2fa07d454345910bbe52c05e16f97674" + selectedTemperatureFormatString, {mode: 'cors'})
-  const allData = await response.json();
-  const selectedWeatherData = {
-    latitude: allData.coord.lat,
-    longitude: allData.coord.lon,
-    summary: allData.weather[0].main,
-    details: allData.weather[0].description,
-    temperature: allData.main.temp,
-    feelsLike: allData.main.feels_like,
-    temperatureFormat: selectedTemperatureFormat
-  }
-  return selectedWeatherData;
+  return allKeysAreasCountries;
 };
 
-const renderWeather = (selectedWeatherData) => {
-  const p = document.getElementById("p");
-  const latitude = document.createTextNode("Latitude: " + selectedWeatherData.latitude);
-  const longitude = document.createTextNode("Longitude: " + selectedWeatherData.longitude);
-  const summary = document.createTextNode("Summary: " + selectedWeatherData.summary);
-  const details = document.createTextNode("Details: " + selectedWeatherData.details);
-  let temperature;
-  let feelsLike;
-  if (selectedWeatherData.temperatureFormat === "f") {
-    temperature = document.createTextNode("Temperature now: " + selectedWeatherData.temperature + "°F");
-    feelsLike = document.createTextNode("Feels like: " + selectedWeatherData.feelsLike + "°F");
-  } else {
-    temperature = document.createTextNode("Temperature now: " + selectedWeatherData.temperature + "°C");
-    feelsLike = document.createTextNode("Feels like: " + selectedWeatherData.feelsLike + "°C");
-  }
-  console.log(temperature);
-  const properties = [latitude, longitude, summary, details, temperature, feelsLike];
-  clearRenderSpace(p);
-  properties.forEach((property) => {
-    p.appendChild(property);
+const renderCityData = (city, cityData) => {
+  console.log(cityData);
+  const searchResults = document.getElementById("search-results");
+  clear(searchResults);
+  cityData.forEach((array) => {
+    const cityAreaCountry = document.createTextNode(capitalizeFirstLetters(city) + ", " + array[1] + ", " + array[2]);
+    searchResults.appendChild(cityAreaCountry);
     linebreak = document.createElement("br");
-    p.appendChild(linebreak);
+    searchResults.appendChild(linebreak);
   });
 };
 
-const clearRenderSpace = (p) => {
-  while (p.firstChild) {
-    p.removeChild(p.firstChild);
+const clear = (e) => {
+  while (e.firstChild) {
+    e.removeChild(e.firstChild);
   }
 };
+
+function capitalizeFirstLetters(string) {
+  let arr = string.split(" ");
+  arr = arr.map((word) => {
+    return word[0].toUpperCase() + word.slice(1).toLowerCase();
+  });
+  return arr.join(" ");
+}
