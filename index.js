@@ -39,23 +39,23 @@ const renderCityData = (city, cityData) => {
   clear(weatherResults);
   cityData.forEach((array) => {
     const btn = document.createElement("button");
-    btn.textContent = "Select";
+    btn.textContent = "Get Weather!";
+    const cityAreaCountry = document.createTextNode(capitalizeFirstLetters(city) + ", " + array[1] + ", " + array[2]);
     btn.onclick = () => {
       console.log(array[0]);
-      fetchAndRenderWeatherData(array[0]);
+      fetchAndRenderWeatherData(array[0], cityAreaCountry);
     };
     searchResults.appendChild(btn);
-    const cityAreaCountry = document.createTextNode(capitalizeFirstLetters(city) + ", " + array[1] + ", " + array[2]);
     searchResults.appendChild(cityAreaCountry);
     linebreak = document.createElement("br");
     searchResults.appendChild(linebreak);
   });
 };
 
-async function fetchAndRenderWeatherData(locationKey) {
+async function fetchAndRenderWeatherData(locationKey, cityAreaCountry) {
   try {
     const weatherData = await fetchWeatherData(locationKey);
-    renderWeatherData(weatherData);
+    renderWeatherData(weatherData, cityAreaCountry);
   } catch(error) {
     const p = document.getElementById("p");
     const errorMessage = document.createTextNode("Error; try again please.");
@@ -72,14 +72,12 @@ async function fetchWeatherData(locationKey) {
     tempInF: allWeatherData[0].Temperature.Imperial.Value,
     tempInC: allWeatherData[0].Temperature.Metric.Value,
     humidity: allWeatherData[0].RelativeHumidity,
-    hasPrecipitation: allWeatherData[0].HasPrecipitation,
-    isDayTime: allWeatherData[0].IsDayTime,
-    icon: allWeatherData[0].WeatherIcon
+    iconValue: allWeatherData[0].WeatherIcon
   }
   return selectedWeatherData;
 }
 
-const renderWeatherData = (weatherData) => {
+const renderWeatherData = (weatherData, cityAreaCountry) => {
   const p = document.getElementById("p");
   clear(p);
   const searchResults = document.getElementById("search-results");
@@ -87,7 +85,17 @@ const renderWeatherData = (weatherData) => {
   const weatherResults = document.getElementById("weather-results");
   clear(weatherResults);
   const summary = document.createTextNode("Summary: " + weatherData.summary);
-  weatherResults.appendChild(summary);
+  const tempInF = document.createTextNode("Temperature (F): " + weatherData.tempInF);
+  const tempInC = document.createTextNode("Temperature (C): " + weatherData.tempInC);
+  const humidity = document.createTextNode("Humidity: " + weatherData.humidity);
+  const icon = document.createElement("img");
+  icon.src = "icons/" + weatherData.iconValue + ".png";
+  const properties = [cityAreaCountry, icon, summary, tempInF, tempInC, humidity];
+  properties.forEach((property) => {
+    weatherResults.appendChild(property);
+    linebreak = document.createElement("br");
+    weatherResults.appendChild(linebreak);
+  });
 }
 
 const clear = (e) => {
