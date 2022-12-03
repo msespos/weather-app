@@ -35,6 +35,8 @@ const renderCityData = (city, cityData) => {
   clear(p);
   const searchResults = document.getElementById("search-results");
   clear(searchResults);
+  const weatherResults = document.getElementById("weather-results");
+  clear(weatherResults);
   cityData.forEach((array) => {
     const btn = document.createElement("button");
     btn.textContent = "Select";
