@@ -40,11 +40,15 @@ const renderCityData = (city, cityData) => {
   cityData.forEach((array) => {
     const btn = document.createElement("button");
     btn.textContent = "Get Weather!";
+    btn.style.padding = "5px 10px";
+    btn.style.margin = "5px 10px";
+    btn.style.color = "#8de969ff";
     const cityAreaCountry = document.createTextNode(capitalizeFirstLetters(city) + ", " + array[1] + ", " + array[2]);
     btn.onclick = () => {
       console.log(array[0]);
       fetchAndRenderWeatherData(array[0], cityAreaCountry);
     };
+    searchResults.style.display = "block";
     searchResults.appendChild(btn);
     searchResults.appendChild(cityAreaCountry);
     linebreak = document.createElement("br");
@@ -84,12 +88,16 @@ const renderWeatherData = (weatherData, cityAreaCountry) => {
   clear(searchResults);
   const weatherResults = document.getElementById("weather-results");
   clear(weatherResults);
+  searchResults.style.display = "none";
+  weatherResults.style.display = "block";
   const summary = document.createTextNode(weatherData.summary);
   const tempInF = document.createTextNode("Temperature (F): " + weatherData.tempInF);
   const tempInC = document.createTextNode("Temperature (C): " + weatherData.tempInC);
   const humidity = document.createTextNode("Humidity: " + weatherData.humidity);
   const icon = document.createElement("img");
   icon.src = "icons/" + weatherData.iconValue + ".png";
+  icon.style.borderRadius = "10%";
+  icon.style.margin = "20px 0px 5px 0px";
   const properties = [cityAreaCountry, icon, summary, tempInF, tempInC, humidity];
   properties.forEach((property) => {
     weatherResults.appendChild(property);
