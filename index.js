@@ -101,3 +101,10 @@ function capitalizeFirstLetters(string) {
   });
   return arr.join(" ");
 }
+
+// prevent submission of form if Enter is pressed
+document.getElementById("form").onkeydown = function(e) {
+  if (e.key === "Enter") {
+    e.preventDefault();
+  }
+}
