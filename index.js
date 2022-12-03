@@ -66,6 +66,7 @@ async function fetchAndRenderWeatherData(locationKey, cityAreaCountry) {
     const p = document.getElementById("p");
     const errorMessage = document.createTextNode("Error; try again please.");
     clear(p);
+    p.style.color = "#ffc857ff";
     p.appendChild(errorMessage);
   }
 };
