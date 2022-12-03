@@ -6,15 +6,15 @@ async function fetchAndRenderCityData() {
     if (cityData.length === 0) {
       const p = document.getElementById("p");
       const noCityFoundMessage = document.createTextNode("No city found; try again please.");
-      noCityFoundMessage.color = "#ffc857ff";
       clear(p);
+      p.style.color = "#ffc857ff";
       p.appendChild(noCityFoundMessage);
     }
   } catch(error) {
     const p = document.getElementById("p");
     const errorMessage = document.createTextNode("Error; try again please.");
-    errorMessage.color = "#ffc857ff";
     clear(p);
+    p.style.color = "#ffc857ff";
     p.appendChild(errorMessage);
   }
 };
