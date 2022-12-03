@@ -84,7 +84,7 @@ const renderWeatherData = (weatherData, cityAreaCountry) => {
   clear(searchResults);
   const weatherResults = document.getElementById("weather-results");
   clear(weatherResults);
-  const summary = document.createTextNode("Summary: " + weatherData.summary);
+  const summary = document.createTextNode(weatherData.summary);
   const tempInF = document.createTextNode("Temperature (F): " + weatherData.tempInF);
   const tempInC = document.createTextNode("Temperature (C): " + weatherData.tempInC);
   const humidity = document.createTextNode("Humidity: " + weatherData.humidity);
