@@ -22,7 +22,7 @@ const btn = document.getElementById("btn");
 btn.addEventListener("click", fetchAndRenderCityData);
 
 async function fetchCityData(city) {
-  const response = await fetch("https://dataservice.accuweather.com/locations/v1/cities/search?apikey=SlhOykseiy5qmrZym7dGGVNRtiGU4Vh0&q=" + city, {mode: 'cors'})
+  const response = await fetch("https://dataservice.accuweather.com/locations/v1/cities/search?apikey=AajQKP7AmjOngPDrOWl8jM3wZqhAcKGh&q=" + city, {mode: 'cors'})
   const allCityData = await response.json();
   let allKeysAreasCountries = [];
   allCityData.forEach((object) => {
@@ -73,7 +73,7 @@ async function fetchAndRenderWeatherData(locationKey, cityAreaCountry) {
 };
 
 async function fetchWeatherData(locationKey) {
-  const response = await fetch("https://dataservice.accuweather.com/currentconditions/v1/" + locationKey + "?apikey=SlhOykseiy5qmrZym7dGGVNRtiGU4Vh0&details=true", {mode: 'cors'})
+  const response = await fetch("https://dataservice.accuweather.com/currentconditions/v1/" + locationKey + "?apikey=AajQKP7AmjOngPDrOWl8jM3wZqhAcKGh&details=true", {mode: 'cors'})
   const allWeatherData = await response.json();
   const selectedWeatherData = {
     summary: allWeatherData[0].WeatherText,
