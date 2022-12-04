@@ -39,6 +39,7 @@ const renderCityData = (city, cityData) => {
   clear(searchResults);
   const weatherResults = document.getElementById("weather-results");
   clear(weatherResults);
+  weatherResults.style.display = "none";
   cityData.forEach((array) => {
     const btn = document.createElement("button");
     btn.textContent = "Get Weather!";

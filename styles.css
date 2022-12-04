@@ -50,5 +50,6 @@
 }
 
 #weather-results {
+  display: none;
   padding: 20px;
 }
