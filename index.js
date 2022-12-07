@@ -32,7 +32,6 @@ async function fetchCityData(city) {
 };
 
 const renderCityData = (city, cityData) => {
-  console.log(cityData);
   const p = document.getElementById("p");
   clear(p);
   const searchResults = document.getElementById("search-results");
@@ -48,7 +47,6 @@ const renderCityData = (city, cityData) => {
     btn.style.color = "#8de969ff";
     const cityAreaCountry = document.createTextNode(capitalizeFirstLetters(city) + ", " + array[1] + ", " + array[2]);
     btn.onclick = () => {
-      console.log(array[0]);
       fetchAndRenderWeatherData(array[0], cityAreaCountry);
     };
     searchResults.style.display = "block";
